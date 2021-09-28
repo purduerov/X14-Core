@@ -1,5 +1,5 @@
-# X13-Core
-Codebase for the the X13 version of the ROV
+# X14-Core
+Codebase for the the X14 version of the ROV
 
 Software Versions
 Ubuntu 18

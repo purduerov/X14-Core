@@ -5,8 +5,8 @@ from numpy import linalg
 # then this comment should be updated describing our process and where all the numbers came from.
 #
 # All measurements are based on:
-# X: LEFT/RIGHT MOTION OF THE ROV. LEFT = +X
-# Y: FORWARD/BACK. FORWARD = +Y = SIDE THE ROV CLAW IS ON
+# X: FORWARD/BACK. FORWARD = +X = SIDE THE ROV CLAW IS ON
+# Y: LEFT/RIGHT MOTION OF THE ROV. LEFT = +Y 
 # Z: UP/DOWN. UP = +Z
 #
 # PITCH: TILT FORWARD/BACK. +PITCH TILTS FORWARD (LOOK DOWN). USE RIGHT HAND RULE ON X AXIS.
@@ -39,11 +39,11 @@ THRUST_MAX = 3.71
 # Center of mass coordinates relative to our measurement point
 COM_X = 0.0  # 0.056 * 0.0254
 COM_Y = 0.0  # -0.1256 * 0.0254
-COM_Z = 2.0 * 0.0254
+COM_Z = 1.4 * 0.0254
 
 # Thruster locations relative to the measurement point of the ROV.
 #                      X	Y	Z
-location = np.matrix([[4.438, 5.679, 0],  # Thruster 1
+location_frame_absolute = np.matrix([[4.438, 5.679, 0],  # Thruster 1
                       [-4.438, 5.679, 0],  # Thruster 2
                       [-4.438, -5.679, 0],  # Thruster 3
                       [4.438, -5.679, 0],  # Thruster 4
@@ -51,7 +51,8 @@ location = np.matrix([[4.438, 5.679, 0],  # Thruster 1
                       [-7.5, 7.313, -2.25],  # Thruster 6
                       [-7.5, -7.313, -2.25],  # Thruster 7
                       [7.5, -7.313, -2.25]])  # Thruster 8
-location *= 0.0254
+location_frame_absolute *= 0.0254 # inches to meters
+location = location_frame_absolute
 
 # Directions the thrust forces point. MUST BE UNIT VECTORS.
 # NOTE
@@ -60,6 +61,7 @@ location *= 0.0254
 XCOMP = np.sin(7 * np.pi / 18)
 YCOMP = np.cos(7 * np.pi / 18)
 
+oneiteration = True
 #                      X	Y	Z
 direction = np.matrix([[0, 0, 1],  # Thruster 1
                        [0, 0, 1],  # Thruster 2
@@ -78,11 +80,13 @@ for vector in direction:
 class ThrustMapper:
     def __init__(self):
         self.location = np.copy(location)
+        self.location_frame_absolute = np.copy(location_frame_absolute)
         self.direction = np.copy(direction)
         self.torque = None
         self.changeOriginLocation(COM_X, COM_Y, COM_Z)
         self.thrusterForceMap = None
         self.createThruserForceMap()
+        self.com = [COM_X, COM_Y, COM_Z]
 
     # Changes the origin location to the given location.
     # relX = the new X origin relative to the current X origin
@@ -95,6 +99,17 @@ class ThrustMapper:
             self.location[i][2] = self.location[i][2] - relZ
 
         self.calcTorqueValues()
+        #self.createThruserForceMap()
+    # tune the origin relative to X, Y, Z
+    def changeOrigin(self, X, Y, Z):
+        #self.com = [X ,Y ,Z ]
+        for i in range(0, len(self.location)):
+            self.location[i][0] = self.location_frame_absolute[i][0] - self.com[0] + X * .0254
+            self.location[i][1] = self.location_frame_absolute[i][1] - self.com[1] + Y * .0254
+            self.location[i][2] = self.location_frame_absolute[i][2] - self.com[2] + Z * .0254
+        #self.location = self.location * .0254
+        self.calcTorqueValues()
+        self.createThruserForceMap()
 
     # Calculates the torque matrix using the location matrix and the direction matrix.
     # Resulting torque values be an 3x8 array with a [pitch, roll, yaw] entry for each thruster.
@@ -172,6 +187,8 @@ class ThrustMapper:
             # print(outputNeeded)
             if np.linalg.norm(outputNeeded) < np.linalg.norm(desiredForce) * (1 - PERCENT_DESIRED_FORCE_YIELDED):
                 break
+            if oneiteration:
+                break
         # print('Restarting!!!!!!!!!!!!!!!!')
 
         return np.transpose(outputThrust).tolist()[0]
@@ -201,9 +218,9 @@ class ThrustMapper:
 
     # Blindly copied from Complex_1. Check these values at some point please
     def thrustToPWM(self, thrustVal):
-        if thrustVal < -ZERO_ROUND_THRESHOLD:
-            pwm = 0.018 * (thrustVal ** 3) + 0.117 * (thrustVal ** 2) + 0.4955 * thrustVal - 0.0991
-        elif thrustVal > ZERO_ROUND_THRESHOLD:
+        if thrustVal < -.04:
+            pwm = 0.018 * (thrustVal ** 3) + 0.117 * (thrustVal ** 2) + 0.4981 * thrustVal - 0.09808
+        elif thrustVal > .04:
             pwm = 0.0095 * (thrustVal ** 3) - 0.0783 * (thrustVal ** 2) + 0.4004 * thrustVal + 0.0986
         else:
             # assume 0 even though dead band has range of pwm values
@@ -226,11 +243,18 @@ class ThrustMapper:
 
 
 if __name__ == '__main__':
+    #global oneiteration
     tm = ThrustMapper()
 
-    for i in range(100):
-        desired_thrust_final = [0, 0, 0, 0, 0, 0]  # X Y Z Ro Pi Ya
+    #for i in range(100):
+    desired_thrust_final = [0.1, 0, 0.0, 0, 0, 0]  # X Y Z Ro Pi Ya
 
-        pwm_values = tm.calculateThrusterOutput(desired_thrust_final)
-
-        print(list(np.around(np.array(pwm_values), 2)))
+    pwm_values = tm.calculateThrusterOutput(desired_thrust_final)
+    #oneiteration = True
+    pwm_values2 = tm.calculateThrusterOutput(desired_thrust_final)
+    result1=np.matmul(tm.thrusterForceMap, pwm_values)
+    result2=np.matmul(tm.thrusterForceMap, pwm_values2)
+    print(list(np.around(np.array(pwm_values), 2)))
+    print(list(np.around(np.array(pwm_values2), 2)))
+    print(list(np.around(np.array(result1), 2)))
+    print(list(np.around(np.array(result2), 2)))

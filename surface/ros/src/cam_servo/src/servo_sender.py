@@ -2,6 +2,7 @@
 
 import rospy
 from std_msgs.msg import Float32, String
+from shared_msgs.msg import servo_msg
 import socket, signal, sys
 import threading
 
@@ -15,8 +16,6 @@ class SocketManager:
         self.sock.listen(5)
         self.sock.settimeout(1)
         self.connected = False
-
-        print('ready')
 
         self.thread = threading.Thread(target=self.run)
         self.thread.start()
@@ -46,20 +45,27 @@ class SocketManager:
 def shutdown(sig, frame):
     global sock
 
-    sock.shutdown() 
-    rospy.signal_shutdown('interrupt')
+    print('please')
+    sock.shutdown()
+    rospy.signal_shutdown('now')
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, shutdown)
     signal.signal(signal.SIGTERM, shutdown)
 
-    rospy.init_node('servo_sender')
-
     sock = SocketManager(int(sys.argv[1]))
 
-    pub = rospy.Publisher('/rov/servo', Float32, queue_size=10)
-    rate = rospy.Rate(100)
+    rospy.init_node('servo_sender', disable_signals=True)
+
+    pub = rospy.Publisher('/rov/ServoAngles', servo_msg, queue_size=10)
+    rate = rospy.Rate(10)
+
+    print('ready')
 
     while not rospy.is_shutdown():
-        pub.publish(angle)
+        msg = servo_msg()
+        msg.angle = angle
+        msg.servo_lock_status = False
+        msg.header.stamp = rospy.Time.now()
+        pub.publish(msg)
         rate.sleep()

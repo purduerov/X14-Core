@@ -78,7 +78,7 @@ if __name__ == "__main__":
     #sub = rospy.Subscriber('reset_imu', Bool,
     #                       _reset_imu_offsets)
     
-    rate = rospy.Rate(50)  # 10hz
+    rate = rospy.Rate(25)  # 10hz
     while not rospy.is_shutdown():
         # try:
         #     trans = tfBuffer.lookup_transform('imu', 'base_link', rospy.Time())
@@ -127,6 +127,7 @@ if __name__ == "__main__":
             R = Q * T1
             rads = euler_from_quaternion(Q.elements)
             out_message.header.stamp = rospy.Time.now()
+            out_message.header.frame_id = "/IMU_euler"
             out_message.gyro
             for i in range(0,3):
                 out_message.gyro[i] = rads[i] * 180.0 / 3.1415

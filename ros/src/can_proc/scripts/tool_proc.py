@@ -7,10 +7,29 @@ TOOLS_BOARD_ID = 0x204
 #PM_BIT = 0b00001000
 #GHOST_BIT = 0b11110111
 
+BLUE = 1 << 1
+BROWN = 1 << 2
+YELLOW = 1 << 3
+GREEN = 1 << 4
+WHITE = 1 << 5
+
+#=============================
+#Grant told me to put it here, don't delete yet
+#yeet - green
+#am - brown
+#pm - blue
+#bs - yello
+#blue - 0b00000010
+#brown - 0b00000100
+#yellow - 0b00001000
+#green - 0b00010000
+#white - 0b00100000
+#=============================
+
 #Easier swapping if we plug solenoids in differently
 sol0 = 1 << 1
 sol1 = 1 << 3 
-sol2 = 1 << 5
+sol2 = 1 << 4
 
 SECONDARY_BIT = sol0
 PM_BIT = sol1
@@ -24,9 +43,10 @@ sub = None
 
 
 def message_received(msg):
-    cmd = (msg.pm * PM_BIT)
-    cmd |= (msg.ghost * GHOST_BIT)
-    cmd |= (msg.secondary * SECONDARY_BIT)
+    cmd = (msg.tools[0] * YELLOW)
+    cmd |= (msg.tools[1] * BLUE)
+    cmd |= (msg.tools[2] * BROWN)
+    cmd |= (msg.tools[3] * GREEN)
     
     cmsg = can_msg()
     cmsg.id = TOOLS_BOARD_ID
@@ -41,7 +61,7 @@ if __name__ == "__main__":
     pub = rospy.Publisher('can_tx', can_msg,
                           queue_size=10)
 
-    sub = rospy.Subscriber('/tools_proc', tools_command_msg,
+    sub = rospy.Subscriber('/tools', tools_command_msg,
                            message_received)
 
     # rate = rospy.Rate(5) # 5hz

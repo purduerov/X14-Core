@@ -137,3 +137,5 @@ After what seems like an eternity (about 30 minutes for me), you should have a w
     Another issue might be is that you need to build nodes in `/ros` before `/surface/ros`
 
 In all cases, especially if you have had previous ROS installs on your machine, make sure `rosdep init`'s file is up-to-date with Python 3 dependencies. Meaning run `rosdep init` to find the file and delete it. Run that command again and run `rosdep update`. You may need to use `sudo` with the init stage.
+
+Updated: 9/29/21

@@ -116,7 +116,7 @@ Oh dear, what are you doing here? These are only meant for those working with Ub
 
     There is a trick to this step. You're essentially tricking `rosdep` into thinking you're on 18.04.
 
-    Run `/rosdep install --from-paths src --ignore-src --rosdistro melodic -y --os=ubuntu:bionic`
+    Run `rosdep install --from-paths src --ignore-src --rosdistro melodic -y --os=ubuntu:bionic`
 
     Very important to add `--os=ubuntu:bionic`.
 

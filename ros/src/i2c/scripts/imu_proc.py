@@ -8,8 +8,8 @@ from shared_msgs.msg import imu_msg
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Pose
 import geometry_msgs.msg
-from tf.transformations import euler_from_quaternion
-import tf2_ros
+#from tf.transformations import euler_from_quaternion
+#import tf2_ros
 from pyquaternion import Quaternion
 
 IMU_PITCH_OFFSET = 0.0
@@ -125,12 +125,12 @@ if __name__ == "__main__":
             #T3 = Quaternion([ 0.7068252, 0, 0, 0.7073883 ])
             #resultQ = quaternion_multiply(transQ, imuQ)
             R = Q * T1
-            rads = euler_from_quaternion(Q.elements)
+            #rads = euler_from_quaternion(Q.elements)
             out_message.header.stamp = rospy.Time.now()
             out_message.header.frame_id = "/IMU_euler"
-            out_message.gyro
-            for i in range(0,3):
-                out_message.gyro[i] = rads[i] * 180.0 / 3.1415
+            #out_message.gyro
+            #for i in range(0,3):
+            #    out_message.gyro[i] = rads[i] * 180.0 / 3.1415
             # = euler_from_quaternion(imu.quat_arr())#[imu.quat_x(),imu.quat_y(),imu.quat_z()]
             # out_message.gyro = [imu.temp(),imu.temp(),imu.temp()]
             ROV_X_Accel = imu.acceleration_z()

@@ -7,7 +7,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Float64
 
 def talker():
-    
+    #collect's pi's cpu temperature data in degrees C.
     cpu = CPUTemperature()
     pub = rospy.Publisher("Pi_TEMP", Float64, queue_size=10)
     rospy.init_node('Pi_CPU_TEMP', anonymous=True)

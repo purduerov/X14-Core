@@ -8,8 +8,8 @@ from shared_msgs.msg import imu_msg
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Pose
 import geometry_msgs.msg
-from tf.transformations import euler_from_quaternion
-import tf2_ros
+#from tf.transformations import euler_from_quaternion
+#import tf2_ros
 from pyquaternion import Quaternion
 
 IMU_PITCH_OFFSET = 0.0
@@ -45,7 +45,7 @@ def quaternion_multiply(quaternion1, quaternion0):
                     -x1*z0 + y1*w0 + z1*x0 + w1*y0,
                      x1*y0 - y1*x0 + z1*w0 + w1*z0])
 def publishTF(self):
-    br = tf2_ros.TransformBroadcaster()
+    #br = tf2_ros.TransformBroadcaster()
     t = geometry_msgs.msg.TransformStamped()
    
     t.header.stamp = rospy.Time.now()
@@ -59,7 +59,7 @@ def publishTF(self):
     t.transform.rotation.z = imu.quat_arr()[2]
     t.transform.rotation.w = imu.quat_arr()[3]
    
-    br.sendTransform(t)
+    #br.sendTransform(t)
 if __name__ == "__main__":
     global imu
     rospy.init_node('imu_proc')
@@ -70,8 +70,8 @@ if __name__ == "__main__":
     pub2 = rospy.Publisher('imu_quat', Pose,
                           queue_size=1)
     
-    tfBuffer = tf2_ros.Buffer()
-    listener = tf2_ros.TransformListener(tfBuffer)
+    #tfBuffer = tf2_ros.Buffer()
+    #listener = tf2_ros.TransformListener(tfBuffer)
     rate = rospy.Rate(10)
     
 
@@ -125,12 +125,12 @@ if __name__ == "__main__":
             #T3 = Quaternion([ 0.7068252, 0, 0, 0.7073883 ])
             #resultQ = quaternion_multiply(transQ, imuQ)
             R = Q * T1
-            rads = euler_from_quaternion(Q.elements)
+            #rads = euler_from_quaternion(Q.elements)
             out_message.header.stamp = rospy.Time.now()
             out_message.header.frame_id = "/IMU_euler"
-            out_message.gyro
-            for i in range(0,3):
-                out_message.gyro[i] = rads[i] * 180.0 / 3.1415
+            #out_message.gyro
+            #for i in range(0,3):
+            #    out_message.gyro[i] = rads[i] * 180.0 / 3.1415
             # = euler_from_quaternion(imu.quat_arr())#[imu.quat_x(),imu.quat_y(),imu.quat_z()]
             # out_message.gyro = [imu.temp(),imu.temp(),imu.temp()]
             ROV_X_Accel = imu.acceleration_z()

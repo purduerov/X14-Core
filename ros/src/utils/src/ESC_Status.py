@@ -5,14 +5,14 @@ import sys
 import can
 
 import rospy
-from shared_msgs.msg import esc_test_data_msg
+from shared_msgs.msg import esc_test_data_msg as Data
 
 lastEsc = [0] * 3
 
 def sendEscData(can_bus):
-    pub = rospy.Publisher('rov/ESCdata', esc_test_data_msg, queue_size=10) # Modify queue size based on rate
+    pub = rospy.Publisher('rov/ESCdata', Data, queue_size=10) # Modify queue size based on rate
     rospy.init_node('ESC_Logger', anonymous=True)
-    rate = rospy.Rate(1) # Figure out what rate to use
+    rate = rospy.Rate(1000) # Figure out what rate to use
     
     while not rospy.is_shutdown():
         for can_rx in can_bus:
@@ -23,7 +23,7 @@ def sendEscData(can_bus):
                 lastEsc_ = lastEsc[can_id - 0x301]
                 lastEsc[can_id - 0x301] = (lastEsc_ + 1) % 4
                 data = list(can_rx.data) # Get data from ESC
-                msg = esc_test_data_msg()
+                msg = Data()
                 msg.escNum  = lastEsc_ # Add ESC Number
                 msg.temperature = data[0] # Add temperature data (deg C)
                 msg.voltage = data[1] / 255 + 10 # Add voltage data (V)

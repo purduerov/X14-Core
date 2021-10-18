@@ -48,6 +48,7 @@ add_message_files(
    esc_single_msg.msg
    auto_control_msg.msg
    auto_command_msg.msg
+   esc_test_data_msg.msg
    pressure_msg.msg
    thrust_command_msg.msg
    final_thrust_msg.msg

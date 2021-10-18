@@ -1,5 +1,6 @@
 geometry_msgs/Twist twist 
-float32 multiplier
 string source
 bool isFine
+float32 multiplier
 bool isPercentPower
+bool isPoolCentric

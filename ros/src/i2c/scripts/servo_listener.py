@@ -45,6 +45,19 @@ p.ChangeDutyCycle(duty_prev)
 sleep(0.04) #max time delay
 p.ChangeDutyCycle(0)
 
+def callback_test(servoStuff, imuStuff):
+    global angle_prev
+    global duty_prev
+
+    angle_prev = servoStuff.angle
+
+    initD = 5
+    while (initD <= 10):
+        p.ChangeDutyCycle(initD)
+        sleep(1)
+        initD += 1
+
+
 def callback(servoStuff, imuStuff):
     #print(imuStuff)
     global angle_prev
@@ -106,7 +119,7 @@ def listener():
     imuStuff = message_filters.Subscriber('imu', imu_msg)
     
     combined = message_filters.ApproximateTimeSynchronizer([servoStuff, imuStuff], 1, slop=10000)
-    combined.registerCallback(callback)
+    combined.registerCallback(callback_test)
     rospy.spin() # spin() simply keeps python from exiting until this node is stopped
     
     print("shutting down servo node")

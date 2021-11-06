@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     #sub = rospy.Subscriber('reset_imu', Bool,
     #                       _reset_imu_offsets)
-    
+    reset_imu_offsets()
     rate = rospy.Rate(25)  # 10hz
     while not rospy.is_shutdown():
         # try:
@@ -108,9 +108,9 @@ if __name__ == "__main__":
             # br.sendTransform(t)
 
             # convert everything to a 0 to 360 to apply a 1d rotation then convert back to -180 to 180
-            ROV_Pitch = clamp_angle_0_to_360(imu.roll()) - IMU_ROLL_OFFSET
-            ROV_Roll = clamp_angle_0_to_360(imu.yaw()) - IMU_YAW_OFFSET
-            ROV_Yaw = clamp_angle_0_to_360(imu.pitch()) - IMU_PITCH_OFFSET
+            ROV_Pitch = clamp_angle_0_to_360(imu.roll()- IMU_ROLL_OFFSET)
+            ROV_Roll = clamp_angle_0_to_360(imu.yaw() - IMU_YAW_OFFSET)
+            ROV_Yaw = clamp_angle_0_to_360(imu.pitch()- IMU_PITCH_OFFSET)
             # out_message.gyro = [ROV_Pitch, ROV_Roll, ROV_Yaw]
             pose_message.orientation.x = imu.quat_x()
             pose_message.orientation.y = imu.quat_y()

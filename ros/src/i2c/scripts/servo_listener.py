@@ -54,7 +54,7 @@ def callback_test(servoStuff, imuStuff):
     initD = 5
     while (initD <= 10):
         p.ChangeDutyCycle(initD)
-        sleep(1)
+        sleep(2)
         initD += 1
 
 
@@ -65,6 +65,11 @@ def callback(servoStuff, imuStuff):
     global lockSet
     global imuPitchRef
     imuPitchDiff = 0
+
+
+
+
+    
 
     if(servoStuff.servo_lock_status == True):
         if(lockSet == 0):
@@ -77,6 +82,8 @@ def callback(servoStuff, imuStuff):
         lockSet = 0
         print("lock has been unset")
 
+    
+    
     adjustedAngle = servoStuff.angle + imuPitchDiff
     if adjustedAngle > MAX_ANGLE:
         adjustedAngle = MAX_ANGLE
@@ -101,7 +108,7 @@ def callback(servoStuff, imuStuff):
         sleep(timeToWait) #this is so the servo pauses before turning off the power
         p.ChangeDutyCycle(0) #if the servo jitters a lot uncomment this it should stop all movement in between calls
 
-
+    
 
 
 

@@ -50,6 +50,7 @@ def callback_test(servoStuff, imuStuff):
     global duty_prev
 
     angle_prev = servoStuff.angle
+    ROS_INFO("CALL TEST RUNS")
 
     initD = 5
     while (initD <= 10):
@@ -67,7 +68,7 @@ def callback(servoStuff, imuStuff):
     imuPitchDiff = 0
 
 
-
+    ROS_INFO("ORIGINAL CALLBACK RUNS")
 
     
 

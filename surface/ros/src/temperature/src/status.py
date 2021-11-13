@@ -3,19 +3,19 @@
 import json
 #ROS
 import rospy
-from shared_msgs.msg import temp_msg
+from std_msgs.msg import Float32
 
 temp = 1
 
 def _temperature(tempdata):
     global temp
-    temp = tempdata
+    temp = tempdata.data
 
     print(json.dumps(temp))
 
 if __name__ == '__main__':
     rospy.init_node('temperature_surface')
-    stat = rospy.Subscriber('/rov/Pi_TEMP', temp_msg, _temperature)
+    stat = rospy.Subscriber('/rov/depth', Float32, _temperature)
 
     while not rospy.is_shutdown():
         rospy.spin()

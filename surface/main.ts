@@ -3,12 +3,13 @@ import setIp from './electron/setIp';
 import setupRos from './electron/setupRos';
 import gamepadListener from './electron/gamepad';
 import log, { LOG_SUCCESS } from './src/components/Log/LogItem';
-import {CATKIN_MAKE, GENERAL, IMU, SERVO, SET_IP, THRUSTERS, RAILCAP} from './src/components/Log/channels';
+import {CATKIN_MAKE, GENERAL, IMU, SERVO, SET_IP, THRUSTERS, RAILCAP, TEMPERATURE} from './src/components/Log/channels';
 import servo from './electron/servo';
 import thrusters from './electron/thrusters';
 import imu from './electron/imu';
 import com from './electron/com';
 import seqimgr from './electron/seqimgr';
+import temperature from './electron/temperature';
 import path from 'path';
 import {spawn} from 'child_process';
 
@@ -24,6 +25,8 @@ const nodeManager = async (win: BrowserWindow) => {
   servo(win).catch(e => win.webContents.send(SERVO, `Error: ${e}`));
 
   thrusters(win).catch(e => win.webContents.send(THRUSTERS, log('Thrusters', `Error: ${e}`)));
+
+  temperature(win).catch(e => win.webContents.send(TEMPERATURE, log('Temperature', `Error: ${e}`)));
 
   seqimgr(win).catch(e => win.webContents.send(RAILCAP, log('rail_cap', `Error: ${e}`)));
 

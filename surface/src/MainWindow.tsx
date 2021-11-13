@@ -7,6 +7,7 @@ import IMU from './components/IMU/IMU';
 import Switch from './components/Switch/Switch';
 import Mosaic from './components/Mosaic/Mosaic';
 import Profiles from './components/Profiles/Profiles';
+import Temperature from './components/Temperature/Temperature';
 
 
 const MainWindow: React.FC = () => {
@@ -28,7 +29,7 @@ const MainWindow: React.FC = () => {
 
                 <ThrusterInfo/>
                 <img style={{width: '100%'}} src='./img/tools.png'/>
-                
+                <Temperature/>
 
             </div>
 

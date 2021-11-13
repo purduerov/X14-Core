@@ -9,6 +9,7 @@ export const COM = 'com_sender';
 export const GENERAL = 'general';
 export const RAILCAP = 'rail_capture';
 export const RAILPROC = 'rail_process';
+export const TEMPERATURE = 'temperature_listener'
 
 export default [
     SET_IP,
@@ -21,5 +22,6 @@ export default [
     COM,
     GENERAL,
     RAILCAP,
-    RAILPROC
+    RAILPROC,
+    TEMPERATURE
 ]

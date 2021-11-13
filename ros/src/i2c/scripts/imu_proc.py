@@ -22,10 +22,13 @@ def reset_imu_offsets():
     global IMU_ROLL_OFFSET
     global IMU_YAW_OFFSET
     print ("message recieved")
-    IMU_PITCH_OFFSET = clamp_angle_0_to_360(imu.pitch())
-    IMU_ROLL_OFFSET = clamp_angle_0_to_360(imu.roll())
-    IMU_YAW_OFFSET = clamp_angle_0_to_360(imu.yaw())
+    IMU_PITCH_OFFSET = imu.pitch()
+    IMU_ROLL_OFFSET = imu.roll()
+    IMU_YAW_OFFSET = imu.yaw()
     print ("imu_pitch offset" , IMU_PITCH_OFFSET)
+    print ("imu_roll offset" , IMU_ROLL_OFFSET)
+    print ("imu_yaw offset" , IMU_YAW_OFFSET)
+
 
 #bind all angles to -180 to 180
 def clamp_angle_neg180_to_180(angle):
@@ -108,9 +111,12 @@ if __name__ == "__main__":
             # br.sendTransform(t)
 
             # convert everything to a 0 to 360 to apply a 1d rotation then convert back to -180 to 180
-            ROV_Pitch = clamp_angle_0_to_360(imu.roll())- IMU_ROLL_OFFSET
-            ROV_Roll = clamp_angle_0_to_360(imu.yaw()) - IMU_YAW_OFFSET
-            ROV_Yaw = clamp_angle_0_to_360(imu.pitch()) - IMU_PITCH_OFFSET
+            #ROV_Pitch = clamp_angle_0_to_360(imu.roll()- IMU_ROLL_OFFSET)
+            #ROV_Roll = clamp_angle_0_to_360(imu.yaw() - IMU_YAW_OFFSET)
+            #ROV_Yaw = clamp_angle_0_to_360(imu.pitch()- IMU_PITCH_OFFSET)
+            ROV_Pitch = imu.roll()
+            ROV_Roll = imu.yaw()
+            ROV_Yaw = imu.pitch()
             # out_message.gyro = [ROV_Pitch, ROV_Roll, ROV_Yaw]
             pose_message.orientation.x = imu.quat_x()
             pose_message.orientation.y = imu.quat_y()

@@ -16,6 +16,8 @@ def _temperature(tempdata):
 if __name__ == '__main__':
     rospy.init_node('temperature_surface')
     stat = rospy.Subscriber('/rov/depth', Float32, _temperature)
+    rate = rospy.Rate(2) #Get twice per Second
 
     while not rospy.is_shutdown():
         rospy.spin()
+        rate.sleep()

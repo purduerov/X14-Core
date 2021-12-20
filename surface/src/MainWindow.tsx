@@ -8,6 +8,7 @@ import Switch from './components/Switch/Switch';
 import Mosaic from './components/Mosaic/Mosaic';
 import Profiles from './components/Profiles/Profiles';
 import Temperature from './components/Temperature/Temperature';
+import Depth from './components/Depth/Depth';
 
 
 const MainWindow: React.FC = () => {
@@ -30,7 +31,7 @@ const MainWindow: React.FC = () => {
                 <ThrusterInfo/>
                 <img style={{width: '100%'}} src='./img/tools.png'/>
                 <Temperature/>
-
+                <Depth/>
             </div>
 
             <div className="bottom-column">

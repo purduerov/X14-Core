@@ -3,8 +3,8 @@ import {spawn} from 'child_process';
 import {TEMPERATURE} from '../src/components/Log/channels';
 import msg, { LOG_ERROR, LOG_WARNING } from '../src/components/Log/LogItem';
 
-const temperature = async (win) => {
-    let listener = spawn('python3', ['-u', path.resolve(__dirname, '../ros/src/temperature/src/status.py')]);
+const telemetry = async (win) => {
+    let listener = spawn('python3', ['-u', path.resolve(__dirname, '../ros/src/telemetry/src/status.py')]);
 
     win.webContents.send(TEMPERATURE, msg(TEMPERATURE, 'Started Temperature node'));
 
@@ -30,4 +30,4 @@ const temperature = async (win) => {
     })
 }
 
-export default temperature;
+export default telemetry;

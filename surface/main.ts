@@ -9,7 +9,7 @@ import thrusters from './electron/thrusters';
 import imu from './electron/imu';
 import com from './electron/com';
 import seqimgr from './electron/seqimgr';
-import temperature from './electron/temperature';
+import telemetry from './electron/telemetry';
 import path from 'path';
 import {spawn} from 'child_process';
 
@@ -26,7 +26,7 @@ const nodeManager = async (win: BrowserWindow) => {
 
   thrusters(win).catch(e => win.webContents.send(THRUSTERS, log('Thrusters', `Error: ${e}`)));
 
-  temperature(win).catch(e => win.webContents.send(TEMPERATURE, log('Temperature', `Error: ${e}`)));
+  telemetry(win).catch(e => win.webContents.send(TEMPERATURE, log('Temperature', `Error: ${e}`)));
 
   seqimgr(win).catch(e => win.webContents.send(RAILCAP, log('rail_cap', `Error: ${e}`)));
 

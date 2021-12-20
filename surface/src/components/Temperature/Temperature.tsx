@@ -22,7 +22,7 @@ const Temperature: React.FC = () => {
 
 	return (
 		<div className="temp-container">
-			<p>Internal Temp: {roundNumber(temp)}</p>    
+			<p>Pi CPU Temperature: {roundNumber(temp)}</p>    
 		</div>
 	)
 }

@@ -95,51 +95,45 @@ const Inputbox: React.FC<inputProps> = ({value, max, min, callback, step}) => {
 }
 
 
-
 const Slider: React.FC<Props> = (props) => {
     const [starting, setStarting] = React.useState(0);
     const [inputActive, setInputActive] = React.useState(false);
 
     React.useEffect(() => {
         setStarting(Object.assign({}, props).value);
-    }, []) 
-
-    //APPLY INPUT VALUE FROM INPUT BOX
-    function applyinput(e) {
-        let changeto = parseFloat(e.target.value);
-        if(isNaN(changeto) || changeto === Infinity) {
-            changeto = props.value!;
-        }
-        if(changeto > props.max!) {
-            changeto = props.max!;
-        } else if(changeto < props.min!) {
-            changeto = props.min!;
-        }
-        props.callback(changeto);
-        setInputActive(false);
-    }
+    }, [])
 
     return (
         <div className='slider-container'>
-            <SliderBar value={props.value} max={props.max} min={props.min} callback={(e) => props.callback(parseFloat(e.target.value))}></SliderBar>
+            <SliderBar value={props.value} step={props.step} max={props.max} min={props.min} callback={(e) => {
+                const target = e.target as HTMLInputElement
+                props.callback(parseFloat(target.value))
+            }}></SliderBar>
             <div className='slider-bottom'>
-                <button 
-                    className='zero-btn'
+                <button className='zero-btn'
                     onClick={(e) => {
                         props.callback(starting)
                         const target = e.target as HTMLInputElement
                         target.blur()
-                    }}
-                >
-                    0
-                </button>
+                    }}>0</button>
                 {inputActive ? (
-                    <Inputbox value={props.value} max={props.max} min={props.min} callback={(e) => applyinput(e)} step={props.step} ></Inputbox>
+                    <Inputbox value={props.value} max={props.max} min={props.min} step={props.step} callback={(e) => {
+                        let target = e.target as HTMLInputElement
+                        let changeto = parseFloat(target.value);
+                        if(isNaN(changeto) || changeto === Infinity) {
+                            changeto = props.value!;
+                        }
+                        if(changeto > props.max!) {
+                            changeto = props.max!;
+                        } else if(changeto < props.min!) {
+                            changeto = props.min!;
+                        }
+                        props.callback(changeto);
+                        setInputActive(false);
+                    }}></Inputbox>
                 ) : (
                     <ValueDisplay value={props.value} callback={(bool) => setInputActive(bool)}></ValueDisplay>
-                )}  
-                
-                
+                )}
             </div>
         </div>
         

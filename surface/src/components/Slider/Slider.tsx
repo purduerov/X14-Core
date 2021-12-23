@@ -21,6 +21,8 @@ const defaultProps: Props = {
     unit: ''
 }
 
+
+
 const Slider: React.FC<Props> = (props) => {
     const [starting, setStarting] = React.useState(0);
     const [inputActive, setInputActive] = React.useState(false)
@@ -34,7 +36,6 @@ const Slider: React.FC<Props> = (props) => {
                 <span className='slider-range'>{props.min}</span>
                 <input 
                     type='range' 
-                    ref = "InputBox"
                     min={props.min} 
                     max={props.max}
                     value={props.value}
@@ -54,14 +55,21 @@ const Slider: React.FC<Props> = (props) => {
                     0
                 </button>
                 {inputActive ? (
-                    <input autoFocus style={{textAlign: 'center'}}
-                    id="slidertextinput"
+                    <input 
+                    autoFocus
+                    className='inputbox'
                     type='number'
                     min={props.min}
                     max={props.max}
                     defaultValue={props.value}
                     step={props.step}
                     onFocus={e => e.target.select()}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') {
+                            const target = e.target as HTMLInputElement;
+                            target.blur();
+                        }
+                    }}
                     onBlur={(e) => {
                          let changeto = parseFloat(e.target.value);
                          if(isNaN(changeto) || changeto === Infinity) {

@@ -1,4 +1,4 @@
-    .slider-container{
+.slider-container{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
@@ -51,4 +51,12 @@
     border-radius: 5px;
     width: 20px;
     height: 100%;
+}
+
+.inputbox {
+    border-radius: 5px;
+    border: none;
+    //width: 60px;
+    align-items: center;
+    text-align: center;
 }

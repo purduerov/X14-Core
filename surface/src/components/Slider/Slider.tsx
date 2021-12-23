@@ -132,7 +132,9 @@ const Slider: React.FC<Props> = (props) => {
                         setInputActive(false);
                     }}></Inputbox>
                 ) : (
-                    <ValueDisplay value={props.value} callback={(bool) => setInputActive(bool)}></ValueDisplay>
+                    <ValueDisplay value={props.value} callback={(bool) => {
+                        setInputActive(bool);
+                    }}></ValueDisplay>
                 )}
             </div>
         </div>

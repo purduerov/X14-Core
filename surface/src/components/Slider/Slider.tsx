@@ -23,10 +23,10 @@ const defaultProps: Props = {
 
 const Slider: React.FC<Props> = (props) => {
     const [starting, setStarting] = React.useState(0);
+    const [inputActive, setInputActive] = React.useState(false)
     React.useEffect(() => {
         setStarting(Object.assign({}, props).value);
-    }, [])
-    
+    }, []) 
 
     return (
         <div className='slider-container'>
@@ -34,6 +34,7 @@ const Slider: React.FC<Props> = (props) => {
                 <span className='slider-range'>{props.min}</span>
                 <input 
                     type='range' 
+                    ref = "InputBox"
                     min={props.min} 
                     max={props.max}
                     value={props.value}
@@ -52,7 +53,34 @@ const Slider: React.FC<Props> = (props) => {
                 >
                     0
                 </button>
-                <span style={{textAlign: 'center'}}>{props.value}{props.unit}</span>
+                {inputActive ? (
+                    <input autoFocus style={{textAlign: 'center'}}
+                    id="slidertextinput"
+                    type='number'
+                    min={props.min}
+                    max={props.max}
+                    defaultValue={props.value}
+                    step={props.step}
+                    onFocus={e => e.target.select()}
+                    onBlur={(e) => {
+                         let changeto = parseFloat(e.target.value);
+                         if(isNaN(changeto) || changeto === Infinity) {
+                             changeto = props.value!;
+                         }
+                         if(changeto > props.max!) {
+                             changeto = props.max!;
+                         } else if(changeto < props.min!) {
+                             changeto = props.min!;
+                         }
+                         props.callback(changeto);
+                         setInputActive(false);
+                    }}
+                    ></input>
+                ) : (
+                    <span style={{textAlign: 'center'}} onClick={() => {setInputActive(true);}}>{props.value}{props.unit}</span>
+                )}  
+                
+                
             </div>
         </div>
         

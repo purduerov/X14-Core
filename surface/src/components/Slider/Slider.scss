@@ -17,6 +17,7 @@
 .slider-bottom{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    height: 20px;
 }
 
 .slider{
@@ -49,4 +50,13 @@
     border: none;
     border-radius: 5px;
     width: 20px;
+    height: 100%;
+}
+
+.inputbox {
+    border-radius: 5px;
+    border: none;
+    //width: 60px;
+    align-items: center;
+    text-align: center;
 }

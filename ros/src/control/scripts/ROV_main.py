@@ -25,25 +25,25 @@ def onLoop():
     #Thruster Control
     thrust_command = thrust_command_msg()
 #    if pid_enabled == True:
-#            controller_percent_power[2] = Float32(last_control_effort_msg)
-    controller_percent_power[2] = Float32(last_control_effort_msg)
+#            controller_percent_power[2] = last_control_effort_msg
+
     thrust_command.desired_thrust = controller_percent_power
     thrust_command.isFine = mode_fine
     thrust_command.multiplier = fine_multiplier
     thrust_command_pub.publish(thrust_command)
 
 def _is_pid_enabled(msg):
-    pid_enabled = msg
+    pid_enabled = msg.data
     rospy.logdebug("PID is enabled")
 
 def _control_effort_input(msg):
-    last_control_effort_msg = msg
+    controller_percent_power[2] = msg.data
 
 def _velocity_input(msg):
     global mode_fine, fine_multiplier
     controller_percent_power[0] = msg.twist.linear.x
     controller_percent_power[1] = msg.twist.linear.y
-    controller_percent_power[2] = msg.twist.linear.z
+#    controller_percent_power[2] = msg.twist.linear.z
     controller_percent_power[3] = msg.twist.angular.x
     controller_percent_power[4] = msg.twist.angular.y
     controller_percent_power[5] = msg.twist.angular.z

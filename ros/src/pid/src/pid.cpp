@@ -24,7 +24,7 @@ PidObject::PidObject() : error_(3, 0), filtered_error_(3, 0), error_deriv_(3, 0)
   node_priv.param<double>("windup_limit", windup_limit_, 1000.0);
   node_priv.param<double>("cutoff_frequency", cutoff_frequency_, -1.0);
   node_priv.param<std::string>("topic_from_controller", topic_from_controller_, "control_effort");
-  node_priv.param<std::string>("topic_from_plant", topic_from_plant_, "state");
+  node_priv.param<std::string>("topic_from_plant", topic_from_plant_, "/rov/depth");
   node_priv.param<std::string>("setpoint_topic", setpoint_topic_, "setpoint");
   node_priv.param<std::string>("pid_enable_topic", pid_enable_topic_, "pid_enable");
   node_priv.param<double>("max_loop_frequency", max_loop_frequency_, 1.0);

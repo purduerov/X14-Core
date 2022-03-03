@@ -7,6 +7,7 @@ import IMU from './components/IMU/IMU';
 import Switch from './components/Switch/Switch';
 import Mosaic from './components/Mosaic/Mosaic';
 import Profiles from './components/Profiles/Profiles';
+import Pid_setpoint from './components/Pid_setpoint/Pid_setpoint';
 
 
 const MainWindow: React.FC = () => {
@@ -15,6 +16,7 @@ const MainWindow: React.FC = () => {
             <div className="left-column">
 
                 <Servo/>
+                <Pid_setpoint/>
                 <Profiles/>
                 <Mosaic/>
 

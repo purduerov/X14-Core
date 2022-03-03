@@ -1,0 +1,16 @@
+.pid-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto repeat(1, 1fr);
+    gap: 5px;
+}
+
+.pid-amount{
+    width: 100%;
+    text-align: center;
+}
+
+.pid-title{
+    @extend .pid-amount;
+    border-bottom: solid;
+}

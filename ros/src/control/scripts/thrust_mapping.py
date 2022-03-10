@@ -43,14 +43,14 @@ COM_Z = 1.4 * 0.0254
 
 # Thruster locations relative to the measurement point of the ROV.
 #                      X	Y	Z
-location_frame_absolute = np.matrix([[4.438, 5.679, 0],  # Thruster 1
-                      [-4.438, 5.679, 0],  # Thruster 2
-                      [-4.438, -5.679, 0],  # Thruster 3
-                      [4.438, -5.679, 0],  # Thruster 4
-                      [7.5, 7.313, -2.25],  # Thruster 5
-                      [-7.5, 7.313, -2.25],  # Thruster 6
-                      [-7.5, -7.313, -2.25],  # Thruster 7
-                      [7.5, -7.313, -2.25]])  # Thruster 8
+location_frame_absolute = np.matrix([[7.328, 7.216, 6.839],  # Thruster 1
+                      [-7.328, 7.216, 6.839],  # Thruster 2
+                      [-7.328, -7.216, 6.839],  # Thruster 3
+                      [7.328, -7.216, 6.839],  # Thruster 4
+                      [7.328, 7.216, -2.839],  # Thruster 5
+                      [-7.328, 7.216, -2.839],  # Thruster 6
+                      [-7.328, -7.216, -2.839],  # Thruster 7
+                      [7.328, -7.216, -2.839]])  # Thruster 8
 location_frame_absolute *= 0.0254 # inches to meters
 location = location_frame_absolute
 

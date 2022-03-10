@@ -61,16 +61,33 @@ location = location_frame_absolute
 XCOMP = np.sin(7 * np.pi / 18)
 YCOMP = np.cos(7 * np.pi / 18)
 
+alpha = 30 * np.pi / 180.0
+beta = 30 * np.pi / 180.0
+x_comp = np.cos(alpha) * np.cos(beta)
+y_comp = np.sin(alpha) * np.cos(beta)
+z_comp = np.sin(beta)
+
 oneiteration = True
 #                      X	Y	Z
-direction = np.matrix([[0, 0, 1],  # Thruster 1
-                       [0, 0, 1],  # Thruster 2
-                       [0, 0, 1],  # Thruster 3
-                       [0, 0, 1],  # Thruster 4
-                       [XCOMP, -YCOMP, 0],  # Thruster 5
-                       [-XCOMP, -YCOMP, 0],  # Thruster 6
-                       [-XCOMP, YCOMP, 0],  # Thruster 7
-                       [XCOMP, YCOMP, 0]])  # Thruster 8
+#direction = np.matrix([[0, 0, 1],  # Thruster 1
+#                       [0, 0, 1],  # Thruster 2
+#                       [0, 0, 1],  # Thruster 3
+#                       [0, 0, 1],  # Thruster 4
+#                       [XCOMP, -YCOMP, 0],  # Thruster 5
+#                       [-XCOMP, -YCOMP, 0],  # Thruster 6
+#                       [-XCOMP, YCOMP, 0],  # Thruster 7
+#                       [XCOMP, YCOMP, 0]])  # Thruster 8
+
+direction = np.matrix([[ x_comp, -y_comp, -z_comp],  # Thruster 1
+                       [-x_comp, -y_comp, -z_comp],  # Thruster 2
+                       [-x_comp,  y_comp, -z_comp],  # Thruster 3
+                       [ x_comp,  y_comp, -z_comp],  # Thruster 4
+                       [ x_comp, -y_comp,  z_comp],  # Thruster 5
+                       [-x_comp, -y_comp,  z_comp],  # Thruster 6
+                       [-x_comp,  y_comp,  z_comp],  # Thruster 7
+                       [ x_comp,  y_comp,  z_comp]])  # Thruster 8
+
+
 
 # Assert all direction vectors are unit vectors (+- 1% for rounding)
 for vector in direction:

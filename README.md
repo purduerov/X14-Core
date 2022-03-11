@@ -9,6 +9,7 @@ ROS Melodic
 Hardware
 Raspberry Pi 4
 
+pi install instructions: https://varhowto.com/install-ros-noetic-raspberry-pi-4/
 ## Getting ROS to work with Python 3
 Previous X repos have ROS working both with Python 2 and 3. This behavior is determined by the shebang (e.g. `#!/usr/bin/python`) at the top of relevant ROS scripts. These should be set to `#!/path/to/python3` going forward.
 

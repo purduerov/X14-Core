@@ -3,6 +3,7 @@ export const CATKIN_MAKE = 'catkin_make';
 export const LOGGER = 'logger';
 export const GAMEPAD = 'gamepad_listener';
 export const SERVO = 'servo';
+export const PID_SETPOINT = 'pid_setpoint';
 export const THRUSTERS = 'thruster_listener';
 export const IMU = 'imu_listener';
 export const COM = 'com_sender';
@@ -16,6 +17,7 @@ export default [
     LOGGER,
     GAMEPAD,
     SERVO,
+    PID_SETPOINT,
     THRUSTERS,
     IMU,
     COM,

@@ -30,8 +30,7 @@ def mapThrusters(can_pow, can_map=None, printOut=False) -> dict:
     if can_map is None:
         can_map = {
             0x201: [7, 0, 0, 0],
-            0x202: [0, 4, 5, 6],
-            0x203: [0, 1, 2, 3]
+            0x202: [0, 4, 5, 6]
         }
 
     can_out = {}
@@ -64,7 +63,7 @@ def writeToCan(packet, timesleep=1, bus=None, printOut=False) -> None:
     for cid in packet:
         data = bytearray(packet[cid])
 
-        can_tx = can.Message(arbitration_id=cid, data=data, extended_id=False)
+        can_tx = can.Message(arbitration_id=cid, data=data,is_extended_id=False)
 
         bus.send(can_tx, timeout=1)
 

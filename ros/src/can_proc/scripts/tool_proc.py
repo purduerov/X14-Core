@@ -1,6 +1,9 @@
 #! /usr/bin/python3
 import rospy
 from shared_msgs.msg import can_msg, tools_command_msg
+from gpiozero import OutputDevice
+
+pm = OutputDevice(23)
 
 TOOLS_BOARD_ID = 0x204
 
@@ -43,20 +46,14 @@ sub = None
 
 
 def message_received(msg):
-    cmd = (msg.tools[0] * YELLOW)
-    cmd |= (msg.tools[1] * BLUE)
-    cmd |= (msg.tools[2] * BROWN)
-    cmd |= (msg.tools[3] * GREEN)
-    
-    cmsg = can_msg()
-    cmsg.id = TOOLS_BOARD_ID
-    cmsg.data = cmd
-    pub.publish(cmsg)
+    if(msg.tools[0]):
+        pm.on()
+    else:
+        pm.off()
 
 
 if __name__ == "__main__":
     rospy.init_node('tool_proc', anonymous=True)
-
     # Publish to the CAN hardware transmitter
     pub = rospy.Publisher('can_tx', can_msg,
                           queue_size=10)

@@ -26,7 +26,7 @@ def topic_message_received(msg):
         data_list.append((msg.data >> shift) % 256)
     data = bytearray(data_list)
     rospy.loginfo('Topic Message Received: ' + str(msg.id) + ':' + str(list(data)))
-    can_tx = can.Message(arbitration_id=msg.id, data=data, extended_id=False)
+    can_tx = can.Message(arbitration_id=msg.id, data=data, is_extended_id=False)
     try:
         can_bus.send(can_tx, timeout=1)
     except can.CanError as cerr:

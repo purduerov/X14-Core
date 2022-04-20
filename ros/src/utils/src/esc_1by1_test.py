@@ -15,8 +15,8 @@ from thrust_range_test import getSignal, writeToCan, N_CAN_BYTES, ZERO_THROTTLE
 # from ...can_proc.scripts.thrust_proc import can_better_map
 
 can_better_map = {
-    0x201: [ 1, 5, 4, 8 ],
-    0x202: [ 3, 7, 2, 6 ],
+    0x201: [ 1, 2, 3, 4 ],
+    0x202: [ 5, 6, 7, 8 ],
     0x203: [ 0, 0, 0, 0 ]
 }
 

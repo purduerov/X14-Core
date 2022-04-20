@@ -5,7 +5,7 @@ from sensor_msgs.msg import Imu
 from std_msgs.msg import Float32, String
 import numpy as np
 import Complex_1
-from thrust_mapping_dev import ThrustMapper
+from thrust_mapping import ThrustMapper
 import json
 from dynamic_reconfigure.server import Server
 from control.cfg import ROV_COMConfig

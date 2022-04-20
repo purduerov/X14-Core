@@ -3,7 +3,7 @@ import rospy
 from shared_msgs.msg import can_msg, tools_command_msg
 from gpiozero import OutputDevice
 
-pm = OutputDevice(23)
+pm = OutputDevice(12)
 
 TOOLS_BOARD_ID = 0x204
 

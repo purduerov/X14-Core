@@ -37,9 +37,9 @@ if __name__ == "__main__":
             data_list.append(ZERO_POWER - POWER_DELTA)  # adds DEFAULT POWER at target pos
             [data_list.append(ZERO_POWER) for _ in range(POS_RANGE - p - 1)]  # adds ZERO POWER buffers after target pos
             data = bytearray(data_list)
-            print str(i) + ' : ' + str(list(data))
+            print(str(i) + ' : ' + str(list(data)))
 
-            can_tx = can.Message(arbitration_id=i, data=data, extended_id=False)
+            can_tx = can.Message(arbitration_id=i, data=data, is_extended_id=False)
             can_bus.send(can_tx)
 
             time.sleep(DELAY)
@@ -49,8 +49,8 @@ if __name__ == "__main__":
             [data_list.append(0) for _ in range(4)]
             [data_list.append(ZERO_POWER) for _ in range(4, 8)]
             data = bytearray(data_list)
-            print str(i) + ' : ' + str(list(data)) + ' STOP'
-            can_tx = can.Message(arbitration_id=i, data=data, extended_id=False)
+            print(str(i) + ' : ' + str(list(data)) + ' STOP')
+            can_tx = can.Message(arbitration_id=i, data=data, is_extended_id=False)
             can_bus.send(can_tx)
 
             time.sleep(DELAY)
@@ -73,9 +73,9 @@ if __name__ == "__main__":
         [data_list.append(0) for _ in range(4)]
         [data_list.append(ZERO_POWER) for _ in range(4, 8)]
         data = bytearray(data_list)
-        print str(i) + ' : ' + str(list(data)) + ' STOP'
+        print( str(i) + ' : ' + str(list(data)) + ' STOP')
 
-        can_tx = can.Message(arbitration_id=i, data=data, extended_id=False)
+        can_tx = can.Message(arbitration_id=i, data=data, is_extended_id=False)
         can_bus.send(can_tx)
 
         time.sleep(DELAY)

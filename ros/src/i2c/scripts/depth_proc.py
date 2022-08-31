@@ -2,7 +2,7 @@
 import rospy
 # import ms5837
 import ms5837
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 
 
 def message_received(msg):
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         pass
 
     pub = rospy.Publisher('depth',
-                          Float32, queue_size=10)
+                          Float64, queue_size=10)
    
    
    
@@ -41,5 +41,5 @@ if __name__ == "__main__":
                     depth_sensor.depth())) # Request Farenheit
         except:
             depth = 0
-        pub.publish(Float32(depth))
+        pub.publish(Float64(depth))
         rate.sleep()

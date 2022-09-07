@@ -2,12 +2,12 @@
 Codebase for the the X14 version of the ROV
 
 Software Versions
-Ubuntu 18
+Ubuntu 20
 Raspbian Buster
-ROS Melodic
+ROS Noetic
 
 Hardware
-Raspberry Pi 4
+Raspberry Pi 4B+
 
 pi install instructions: https://varhowto.com/install-ros-noetic-raspberry-pi-4/
 ## Getting ROS to work with Python 3

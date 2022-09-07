@@ -1,9 +1,9 @@
 # X14-Core
 Codebase for the the X14 version of the ROV
 
-Software Versions
-Ubuntu 20
-Raspbian Buster
+## Software Versions
+Ubuntu 20 \
+Raspbian Buster \
 ROS Noetic
 
 Hardware
